@@ -1,0 +1,95 @@
+@import 'buyblo-box.css';
+@import 'buyblo-box-admin-search-form.css';
+
+.buyblobox.buyblobox-metabox .inside {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.buyblo-admin-panel .buyblo-box-group-product .buyblo-box-product-image {
+    background-color: transparent;
+}
+
+.buyblo-admin-panel .group-title {
+    color: #18cc79;
+    font-size: 13px;
+    padding-top: 20px;
+}
+
+.buyblo-admin-panel .buyblo-box-settings.buyblo-prod-visible {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.buyblo-site-icon{
+    position: absolute;
+    display: block;
+    top:0;
+    right:4px;
+    width:25px;
+    height:34px;
+    background: url('../images/buyblo-logo.gif') no-repeat center center;
+    filter: alpha(opacity=100);
+    -moz-opacity: 1;
+    opacity: 1;
+}
+
+#buyblo-site-url:hover{
+    filter: alpha(opacity=70);
+    -moz-opacity: 0.7;
+    opacity: .7;
+}
+
+#buyblo-boxes-groups .buyblo-boxes-group{
+    position:relative;
+}
+
+#buyblo-groups-container{
+    position: relative;
+}
+
+.buyblo-post-status{
+    padding-top:10px;
+}
+
+.buyblo-post-status .buyblo-post-status-visible ,
+.buyblo-post-status .buyblo-post-status-hidden {
+    display: inline-block;
+}
+
+.buyblo-post-status .buyblo-post-status-visible span,
+.buyblo-post-status .buyblo-post-status-hidden span{
+    display: inline-block;
+    width:12px;
+    height:12px;
+    border-radius: 50%;
+    vertical-align: bottom;
+    margin-bottom: 2px;
+}
+
+.buyblo-post-status .buyblo-post-status-visible span{
+    background-color:#18cc79;
+}
+
+.buyblo-post-status .buyblo-post-status-visible{
+    color: #18cc79;
+}
+
+.buyblo-post-status .buyblo-post-status-hidden span{
+    background-color:#c6c6c6;
+}
+
+.buyblo-post-status .buyblo-post-status-hidden{
+    color: #c6c6c6;
+}
+
+.buyblo-post-status .buyblo-post-link{
+    display: inline-block;
+    border-left: 1px solid #cccccc;
+    padding-left: 8px;
+    margin-left: 4px;
+}
+
+.buyblo-post-status .buyblo-post-link a{
+    color: #23282d;
+}

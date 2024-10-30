@@ -1,0 +1,90 @@
+<div class="Wrapper">
+    <div class="body container">
+        <section class="buyblo_search_form">
+            <div class="buyblo_row_col">
+                <div class="buyblu_col_flt12">
+                    <h3 class="buyblo_section_title">Dołącz produkty do publikacji:</h3>
+                </div>
+            </div>
+
+            <div class="buyblo_row_col">
+                <div class="buyblu_col_flt8">
+                    <form>
+                        <div class="buyblo_row_col">
+                            <div class="buyblu_col_flt4">
+                                <fieldset>
+                                    <div class="buyblo-search-input" id="buyblo_filter_category_start">
+                                        <div class="buyblo_input-group buyblo_input_box">
+                                            <span class="buyblo_input-group-addon buyblo_icon_folder"></span>
+                                            <input type="text" class="buyblo_input_field" placeholder="Kategoria">
+                                            <span class="buyblo_more_icon"></span>
+                                        </div>
+                                        <div class="buyblo_filters"></div>
+                                        <div class="buyblo_results_list">
+                                            <ul class="buyblo_filter_category_start">
+                                                {% for category in initData.getCategoriesRoot %}
+                                                    <li data-value="{{ category.url|productsSearchUrl }}">{{ category.title }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="buyblu_col_flt4">
+                                <fieldset>
+                                    <div class="buyblo-search-input" id="buyblo_filter_producer_start">
+                                        <div class="buyblo_input-group buyblo_input_box">
+                                            <span class="buyblo_input-group-addon buyblo_icon_tag"></span>
+                                            <input type="text" class="buyblo_input_field" placeholder="Producent">
+                                            <span class="buyblo_more_icon"></span>
+                                        </div>
+                                        <div class="buyblo_filters"></div>
+                                        <div class="buyblo_results_list">
+                                            <span class="buyblo_list_label">Wpisz 2 lub więcej znaków</span>
+                                            <ul class="buyblo_filter_producer_start">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="buyblu_col_flt4">
+                                <fieldset>
+                                    <div class="buyblo-search-input" id="buyblo_filter_shop_start">
+                                        <div class="buyblo_input-group buyblo_input_box">
+                                            <span class="buyblo_input-group-addon buyblo_icon_shop"></span>
+                                            <input type="text" class="buyblo_input_field" placeholder="Sklep">
+                                            <span class="buyblo_more_icon"></span>
+                                        </div>
+                                        <div class="buyblo_filters"></div>
+                                        <div class="buyblo_results_list">
+                                            <span class="buyblo_list_label">Wpisz 2 lub więcej znaków</span>
+                                            <ul class="buyblo_filter_shop_start">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="buyblo_row_col">
+                            <fieldset class="Search Large" id="buyblo_filter_search_start">
+                                <div class="buyblu_col_flt9">
+                                    <div class="buyblo-search-input">
+                                        <div class="buyblo_input-group search-input-field buyblo_input_box">
+                                            <span class="buyblo_input-group-addon buyblo_icon_search"></span>
+                                            <input class="buyblo_input_field" type="search" placeholder="Wyszukiwanie"
+                                                   value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="buyblu_col_flt3">
+                                    <input class="buyblo_btn_green" value="Szukaj" type="submit">
+                                </div>
+                            </fieldset>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </section>
+    </div>
+</div>

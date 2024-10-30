@@ -1,0 +1,313 @@
+{% set filters = searchResult.getFilters %}
+<div class="body container">
+    <section class="buyblo_search_form">
+
+        <div class="buyblo_row_col">
+            <div class="buyblu_col_flt12">
+                <h3 class="buyblo_section_title">Dołącz produkty do publikacji:</h3>
+            </div>
+        </div>
+        <div class="buyblo_row_col">
+            <div class="buyblu_col_flt8">
+                <div class="buyblo_row_col">
+
+                    {% if filters.getCategory is defined %}
+                        {% for categoriesOnLevel in searchResult.getCategoriesByLevels %}
+                            {% set categoriesLevel = loop.index0 %}
+                            <div class="buyblu_col_flt4">
+                                <fieldset>
+                                    {% set activeCategory = '' %}
+                                    {% set activeCategoryValue = '' %}
+                                    {% for categoryFromLevel in categoriesOnLevel %}
+                                        {% if categoryFromLevel.id == filters.getCategory.path[categoriesLevel].id %}
+                                            {% set activeCategory = categoryFromLevel.name|raw %}
+                                            {% set activeCategoryValue = categoryFromLevel.urlIn|productsSearchUrl %}
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    <div class="buyblo-search-input buyblo-filters-box">
+                                        <div class="buyblo_input-group buyblo_input_box">
+                                            <span class="buyblo_input-group-addon buyblo_icon_folder"></span>
+                                            <input type="text" class="buyblo_input_field" placeholder="Kategoria"
+                                                   value="">
+                                            <span class="buyblo_more_icon"></span>
+
+                                            {% if activeCategory %}
+                                                <div class="buyblo_active_category">
+                                                    <span class="buyblo_category_label">{{ activeCategory }}</span>
+                                                    <span class="buyblo_remove"></span>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="buyblo_filters"></div>
+
+                                        <div class="buyblo_results_list">
+                                            <ul data-placeholder="Kategoria"
+                                                data-categories-level="{{ loop.index0 }}"
+                                                data-value-active="{{ activeCategoryValue }}">
+                                                <li class="buyblo-hidden-list-element" data-value=""></li>
+                                                {% for categoryFromLevel in categoriesOnLevel %}
+                                                    {% if categoryFromLevel.id != filters.getCategory.path[categoriesLevel].id %}
+                                                        <li data-value="{{ categoryFromLevel.urlIn|productsSearchUrl }}"
+                                                        >{{ categoryFromLevel.name|raw }}</li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </fieldset>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+
+                    {% set filtersCategories = filters.getFiltersCategories %}
+                    {% if not filtersCategories.isExcluded and filtersCategories.count %}
+                        <div class="buyblu_col_flt4">
+                            <fieldset>
+                                <div class="buyblo-search-input buyblo-filters-box">
+                                    <div class="buyblo_input-group buyblo_input_box">
+                                        <span class="buyblo_input-group-addon buyblo_icon_folder"></span>
+                                        <input type="text" class="buyblo_input_field" placeholder="Kategoria">
+                                        <span class="buyblo_more_icon"></span>
+                                    </div>
+                                    <div class="buyblo_filters"></div>
+
+                                    <div class="buyblo_results_list">
+                                        <ul
+                                                {% if category is defined %}data-categories-level="{{ searchResult.getCategoriesByLevels|length }}"{% endif %}>
+                                            {% for categoryFilter in filtersCategories if not categoryFilter.isFilter %}
+                                                <li data-value="{{ categoryFilter.urlIn|productsSearchUrl }}"
+                                                >{{ categoryFilter.name|raw }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    {% endif %}
+
+
+                    {% set filtersProducers = filters.getFiltersProducers %}
+                    {% if not filtersProducers.isExcluded %}
+                        {% set selectedProducers = filters.getFiltersSelectedProducers %}
+                        <div class="buyblu_col_flt4">
+                            <fieldset>
+                                <div class="buyblo-search-input buyblo-filters-box">
+                                    <div class="buyblo_input-group buyblo_input_box">
+                                        <span class="buyblo_input-group-addon buyblo_icon_tag"></span>
+                                        <input type="text" class="buyblo_input_field" placeholder="Producent">
+                                        <span class="buyblo_more_icon"></span>
+                                    </div>
+
+                                    <div class="buyblo_filters"
+                                         data-url-out="{% if filtersProducers.urlOut|trim('/') %}{{ filtersProducers.urlOut|productsSearchUrl }}{% else %}/{% endif %}">
+                                        {% for producerFilter in filtersProducers %}
+                                            {% if producerFilter.isFilter %}
+                                                <span class="buyblo_filter">
+                                                        {{ producerFilter.name|raw }}
+                                                    <span class="buyblo_close_filter"
+                                                          data-value="{{ producerFilter.param }}">x</span>
+                                                    </span>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+
+                                    <div class="buyblo_results_list">
+                                        <ul class="buyblo_can_be_multi"
+                                            data-url-out="{% if filtersProducers.urlOut|trim('/') %}{{ filtersProducers.urlOut|productsSearchUrl }}{% else %}/{% endif %}"
+                                            data-url-in-template="{{ filtersProducers.urlInTemplate|productsSearchUrl }}"
+                                            {% if selectedProducers.count > 1 %}data-multiple="multiple"{% endif %}>
+                                            {% for producerFilter in filtersProducers %}
+
+                                                {% if selectedProducers.count > 1 %}
+                                                    {% set producerValue = producerFilter.param %}
+                                                {% elseif producerFilter.url %}
+                                                    {% set producerValue = producerFilter.url|productsSearchUrl %}
+                                                {% else %}
+                                                    {% set producerValue = '/' %}
+                                                {% endif %}
+
+                                                <li data-value="{{ producerValue }}"
+                                                    class="{% if producerFilter.isFilter %}buyblo_selected_filter{% endif %}
+                                                                {% if producerFilter.total == 0 %} disabled{% endif %}"
+                                                >{{ producerFilter.name|raw }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    {% endif %}
+
+                    {% set filtersShops = filters.getFiltersShops %}
+                    {% if not filtersShops.isExcluded %}
+                        {% set selectedShops = filters.getFiltersSelectedShops %}
+                        <div class="buyblu_col_flt4">
+                            <fieldset>
+                                <div class="buyblo-search-input buyblo-filters-box">
+                                    <div class="buyblo_input-group buyblo_input_box">
+                                        <span class="buyblo_input-group-addon buyblo_icon_shop"></span>
+                                        <input type="text" class="buyblo_input_field" placeholder="Sklep">
+                                        <span class="buyblo_more_icon"></span>
+                                    </div>
+                                    <div class="buyblo_filters"
+                                         data-url-out="{% if filtersShops.urlOut|trim('/') %}{{ filtersShops.urlOut|productsSearchUrl }}{% else %}/{% endif %}">
+                                        {% for shopFilter in filtersShops %}
+                                            {% if shopFilter.isFilter %}
+                                                <span class="buyblo_filter">
+                                                        {{ shopFilter.name|raw }}
+                                                    <span class="buyblo_close_filter"
+                                                          data-value="{{ shopFilter.param }}">x</span>
+                                                    </span>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+
+                                    <div class="buyblo_results_list">
+                                        <ul class="filtersShops buyblo_can_be_multi"
+                                            data-url-out="{% if filtersShops.urlOut|trim('/') %}{{ filtersShops.urlOut|productsSearchUrl }}{% else %}/{% endif %}"
+                                            data-url-in-template="{{ filtersShops.urlInTemplate|productsSearchUrl }}"
+                                            {% if selectedShops.count > 1 %}data-multiple="multiple"{% endif %}>
+                                            {% for shopFilter in filtersShops %}
+
+                                                {% if selectedShops.count > 1 %}
+                                                    {% set shopValue = shopFilter.param %}
+                                                {% elseif shopFilter.url %}
+                                                    {% set shopValue = shopFilter.url|productsSearchUrl %}
+                                                {% else %}
+                                                    {% set shopValue = '/' %}
+                                                {% endif %}
+
+                                                <li data-value="{{ shopValue }}"
+                                                    class="{% if shopFilter.isFilter %}buyblo_selected_filter{% endif %}
+                                                                {% if shopFilter.total == 0 %} disabled{% endif %}"
+                                                >{{ shopFilter.name|raw }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+
+
+                            </fieldset>
+                        </div>
+                    {% endif %}
+
+                    {% set filtersPriceRanges = filters.getFiltersPriceRanges %}
+                    {% if not filtersPriceRanges.isExcluded and filtersPriceRanges.urlInTemplate %}
+                        {% set selectedPriceRange = filters.getFilterSelectedPriceRange %}
+                        <div class="buyblu_col_flt4">
+                            <div class="buyblo_row_col">
+                                <fieldset id="buyblo_filter_prices"
+                                          data-price-url-in-template="{{ filtersPriceRanges.urlInTemplate|productsSearchUrl }}"
+                                          {% if selectedPriceRange %}data-price-url-out="{{ selectedPriceRange.url|productsSearchUrl }}"{% endif %}>
+                                    <div class="buyblu_col_flt6">
+                                        <div class="buyblo_input-group">
+                                            <input type="number" min="1" max="10000" placeholder="Cena od"
+                                                   class="buyblo_min_price{% if selectedPriceRange and selectedPriceRange.min > 0 %} Active{% endif %}"
+                                                   value="{% if selectedPriceRange and selectedPriceRange.min > 0 %}{{ selectedPriceRange.min }}{% endif %}">
+                                        </div>
+                                    </div>
+                                    <div class="buyblu_col_flt6">
+                                        <div class="buyblo_input-group">
+                                            <input type="number" min="1" max="10000" placeholder="Cena do"
+                                                   class="buyblo_max_price{% if selectedPriceRange and selectedPriceRange.max > 0 %} Active{% endif %}"
+                                                   value="{% if selectedPriceRange and selectedPriceRange.max > 0 %}{{ selectedPriceRange.max }}{% endif %}">
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% for propertiesFilter in filters.getFiltersProperties %}
+                        {% if not propertiesFilter.isExcluded %}
+                            {% set propertiesSelectedFilterCount = 0 %}
+                            {% for propertiesSelectedFilter in filters.getFiltersSelectedProperties if propertiesSelectedFilter.id == propertiesFilter.id %}
+                                {% set propertiesSelectedFilterCount = propertiesSelectedFilter.count %}
+                            {% endfor %}
+                            <div class="buyblu_col_flt4">
+                                <fieldset>
+                                    <div class="buyblo-search-input buyblo-filters-box">
+                                        <div class="buyblo_input-group buyblo_input_box">
+                                            <span class="buyblo_input-group-addon buyblo_icon_tag"></span>
+                                            <input type="text" class="buyblo_input_field"
+                                                   placeholder="{{ propertiesFilter.name }}">
+                                            <span class="buyblo_more_icon"></span>
+                                        </div>
+
+                                        <div class="buyblo_filters"
+
+                                             data-url-out="{% if propertiesFilter.urlOut|trim('/') %}{{ propertiesFilter.urlOut|productsSearchUrl }}{% else %}/{% endif %}">
+                                            {% for propertyFilter in propertiesFilter %}
+                                                {% if propertyFilter.isFilter %}
+                                                    <span class="buyblo_filter">
+                                                        {{ propertyFilter.name|raw }}{{ propertiesFilter.unit }}
+                                                        <span class="buyblo_close_filter"
+                                                              data-value="{{ propertyFilter.param }}">x</span>
+                                                    </span>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+
+
+                                        <div class="buyblo_results_list">
+                                            <ul data-placeholder="{{ propertiesFilter.name }}"
+                                                class="buyblo_can_be_multi"
+                                                data-url-out="{% if propertiesFilter.urlOut|trim('/') %}{{ propertiesFilter.urlOut|productsSearchUrl }}{% else %}/{% endif %}"
+                                                data-url-in-template="{{ propertiesFilter.urlInTemplate|productsSearchUrl }}"
+                                                {% if propertiesFilter.isPropertyValues and propertiesSelectedFilterCount > 1 %}data-multiple="multiple"{% endif %}>
+
+                                                {% for propertyFilter in propertiesFilter %}
+
+                                                    {% if propertiesFilter.isPropertyValues and propertiesSelectedFilterCount > 1 %}
+                                                        {% set value = propertyFilter.param %}
+                                                    {% else %}
+                                                        {% set value = propertyFilter.url|productsSearchUrl %}
+                                                    {% endif %}
+
+                                                    <li data-value="{{ value }}"
+                                                        class="{% if propertyFilter.isFilter %}buyblo_selected_filter{% endif %}
+                                                                {% if propertyFilter.total == 0 %} disabled{% endif %}"
+                                                    >{{ propertyFilter.name|raw }}{{ propertiesFilter.unit }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% set phrase = filters.getPhrase %}
+                    <div class="buyblu_col_flt12">
+                        <div class="buyblo_row_col">
+                            <fieldset
+                                    id="buyblo_filter_search"
+                                    data-phrase-url-in-template="{{ phrase.urlInTemplate|productsSearchUrl }}"
+                                    data-phrase-url-out="{% if phrase.urlOut|trim('/') %}{{ phrase.urlOut|productsSearchUrl }}{% elseif phrase.urlOut %}/{% endif %}">
+                                <div class="buyblu_col_flt9">
+                                    <div class="buyblo-search-input">
+                                        <div class="buyblo_input-group search-input-field buyblo_input_box">
+                                            <span class="buyblo_input-group-addon buyblo_icon_search"></span>
+                                            <input class="buyblo_input_field" type="search"
+                                                   placeholder="Wyszukiwanie"
+                                                   value="{{ phrase.value }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="buyblu_col_flt3">
+                                    <input class="buyblo_btn_green" value="Szukaj" type="submit">
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>
+

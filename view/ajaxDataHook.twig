@@ -1,0 +1,9 @@
+<div style="{% if content is not defined %}display: none;{% endif %}"
+     data-hook="buyblo-box"
+     data-id="{{ hook_id }}"
+     data-post-id="{{ post_id }}"
+        {% if group is defined %} data-group="{{ group }}"{% endif %}
+        {% if classes is defined %} data-classes="{{ classes }}"{% endif %}
+        {% if content is defined %} data-loaded="true"{% endif %}>
+    {% if content is defined %}{{ content|raw }}{% endif %}
+</div>

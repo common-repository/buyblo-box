@@ -1,0 +1,87 @@
+<?php
+
+namespace Nokaut\BuybloApiKit\ClientApi\Rest\Fetch;
+
+
+use ArrayIterator;
+use Nokaut\BuybloApiKit\ClientApi\Rest\Query\QueryInterface;
+use Nokaut\BuybloApiKit\Collection\CollectionInterface;
+use Traversable;
+
+class Fetches implements CollectionInterface
+{
+    /**
+     * @var Fetch[]
+     */
+    protected $fetches = array();
+
+    /**
+     * (PHP 5 &gt;= 5.0.0)<br/>
+     * Retrieve an external iterator
+     * @link http://php.net/manual/en/iteratoraggregate.getiterator.php
+     * @return Traversable An instance of an object implementing <b>Iterator</b> or
+     * <b>Traversable</b>
+     */
+    public function getIterator()
+    {
+        return new ArrayIterator($this->fetches);
+    }
+
+    /**
+     * @param int $index
+     * @return Fetch
+     */
+    public function getItem($index)
+    {
+        return $this->fetches[$index];
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.1.0)<br/>
+     * Count elements of an object
+     * @link http://php.net/manual/en/countable.count.php
+     * @return int The custom count as an integer.
+     * </p>
+     * <p>
+     * The return value is cast to an integer.
+     */
+    public function count()
+    {
+        count($this->fetches);
+    }
+
+    public function addFetch(Fetch $fetch)
+    {
+        $this->fetches[] = $fetch;
+    }
+
+    /**
+     * @param Fetch[] $fetches
+     */
+    public function setFetches(array $fetches)
+    {
+        $this->fetches = array_values($fetches);
+    }
+
+    /**
+     * @return QueryInterface[]
+     */
+    public function getQueries()
+    {
+        $queries = array();
+        foreach ($this->fetches as $fetch) {
+            $queries[] = $fetch->getQuery();
+        }
+        return $queries;
+    }
+
+    public function __clone()
+    {
+        $this->fetches = array_map(
+            function ($fetch) {
+                return clone $fetch;
+            },
+            $this->fetches
+        );
+    }
+}

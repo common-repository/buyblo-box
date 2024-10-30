@@ -1,0 +1,29 @@
+{
+    "name": "nokaut/buyblo-api-kit",
+    "description": "Integration with BuyBlo API",
+    "keywords": ["buyblo api"],
+    "type": "library",
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nokaut Frontend It",
+            "email": "frontend@nokaut.pl"
+        }
+    ],
+    "require": {
+        "php": ">=5.3",
+        "psr/log": "~1.0",
+        "guzzle/guzzle": "~3.9",
+        "commerceguys/guzzle-oauth2-plugin": "~1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": ">=4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Nokaut\\BuybloApiKit\\": "src/"
+        }
+    }
+}

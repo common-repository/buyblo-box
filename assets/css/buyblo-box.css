@@ -1,0 +1,223 @@
+.buyblo-product-widget {
+    max-width: 1000px;
+    padding: 0;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.buyblo-overflo-hidden {
+    max-width: 100%;
+    padding: 0;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+}
+
+.buyblo-box-product-list {
+    max-width: 100%;
+    padding: 0;
+    margin: 0 auto;
+    list-style-type: none;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row nowrap;
+    align-items: flex-start;
+    position: relative;
+}
+
+.buyblo-box-product-list .buyblo-box-group-product {
+    display: block;
+    margin: 0 auto;
+    background-color: #fff;
+    width: calc(100% * (1 / 4));
+    max-width: calc(100% * (1 / 4));
+    padding: 0 5px;
+    position: relative;
+}
+
+.buyblo-box-product-list .buyblo-box-group-product:hover {
+    filter: alpha(opacity=70);
+    -moz-opacity: 0.7;
+    opacity: 0.7;
+}
+
+.buyblo-box-product-list .buyblo-box-group-product:hover .buyblo-box-settings {
+    visibility: visible;
+    filter: alpha(opacity=100);
+    -moz-opacity: 1;
+    opacity: 1;
+}
+
+.buyblo-box-product-list .buyblo-box-group-product .buyblo-box-top-label {
+    height: 20px;
+    font-size: 10px;
+    line-height: 20px;
+    padding: 0 5px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #cbcbcb;
+    text-align: center;
+}
+
+.buyblo-box-product-list .buyblo-box-group-product .buyblo-box-top-label.buyblo-box-top-label-promo {
+    background-color: #18cc79;
+    color: #fff;
+}
+
+.buyblo-box-product-list .buyblo-box-group-product .buyblo-box-product-image {
+    width: 100%;
+    position: relative;
+    border: 0;
+    padding: 10px 0;
+}
+
+.buyblo-box-product-list .buyblo-box-group-product .buyblo-box-product-image img {
+    width: 100%;
+}
+
+.buyblo-box-product-list .buyblo-box-group-product .buyblo-box-product-title {
+    padding: 0;
+    margin: 0 auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 16px;
+    line-height: 1.2em;
+    font-weight: 100;
+    height: 3.6em;
+    overflow: hidden;
+    color: #1f8ae0;
+    text-decoration: none;
+}
+
+.buyblo-box-product-list .buyblo-box-group-product .buyblo-box-product-title a::before {
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.buyblo-box-product-list .buyblo-box-group-product .buyblo-box-product-title a,
+.buyblo-box-product-list .buyblo-box-group-product .buyblo-box-product-title a:hover {
+    text-decoration: none;
+    color: #000;
+}
+
+.buyblo-box-product-list .buyblo-box-group-product .buyblo-box-product-category {
+    font-size: 13px;
+    color: #444;
+    border-top: 1px solid #ededed;
+}
+
+.buyblo-box-product-list .buyblo-box-group-product .buyblo-box-product-price {
+    font-size: 16px;
+    color: #444;
+    font-weight: bold;
+    padding: 5px 0;
+    border-top: 1px solid #ededed;
+}
+
+.buyblo-box-product-list .buyblo-box-group-product .buyblo-box-product-price span {
+    color: #18cc79;
+    border: 0;
+    padding: 0;
+    margin: 0 auto;
+    box-shadow: none;
+    display: inline-block;
+}
+
+.buyblo-box-product-list .buyblo-box-group-product .buyblo-box-product-price span sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+    top: -0.3em;
+}
+
+.buyblo-box-product-list .buyblo-box-group-product .buyblo-box-product-parameters {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+}
+
+.buyblo-box-product-list .buyblo-box-group-product .buyblo-box-product-parameters ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    border: none;
+    box-shadow: none;
+}
+
+.buyblo-box-product-list .buyblo-box-group-product .buyblo-box-product-parameters ul li {
+    color: #777;
+    font-size: 13px;
+    line-height: 16px;
+    border-top: 1px solid #ededed;
+    padding: 5px 5px 5px 0;
+    margin: 0 auto;
+}
+
+.buyblo-box-product-list .buyblo-box-group-product .buyblo-box-product-parameters ul li em {
+    color: #000;
+    font-style: normal;
+}
+
+.buyblo-navigation-slider {
+    position: absolute;
+    display: none;
+    margin: 0 auto;
+    padding: 0;
+    height: 0;
+    width: calc(100% - 50px);
+    z-index: 2;
+    left: 10px;
+    top: 50%;
+    margin-top: -20px;
+}
+
+.buyblo-navigation-slider .buyblo-navigation-left, .buyblo-navigation-slider .buyblo-navigation-right {
+    position: absolute;
+    padding: 0;
+    margin: 0 auto;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 40px;
+    line-height: 40px;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.19);
+    text-align: center;
+    border: 0;
+    box-shadow: none;
+    display: block;
+}
+
+.buyblo-navigation-slider .buyblo-navigation-right {
+    left: auto;
+    right: 0;
+}
+
+@media only screen and (max-width: 600px) {
+    .buyblo-box-product-list .buyblo-box-group-product {
+        width: calc(100%);
+        max-width: calc(100%);
+        min-width: calc(100%);
+    }
+
+    .buyblo-product-widget {
+        margin: 0 10px;
+        margin-bottom: 20px;
+        position: relative;
+    }
+
+    .buyblo-navigation-slider {
+        display: block;
+        left: -10px;
+        width: calc(100% + 20px);
+    }
+}

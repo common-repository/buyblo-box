@@ -1,0 +1,102 @@
+<div class="buyblo buyblo-boxes" {% if classes %}class="{{ classes|join(' ') }}"{% endif %}>
+    <div class="buyblo-boxes-post">
+        {% for group in post.getGroups %}
+
+            <div class="buyblo-boxes-group">
+                <h3 class="group-title">{{ group.getCategory.getTitle }}</h3>
+                <div class="buyblo-product-widget" data-widget-group-id="{{ loop.index }}" data-widget-visible-nr="1">
+                    <div class="buyblo-overflo-hidden">
+                        <div class="buyblo-box-product-list">
+                            {% for product in group.getProducts if product.getEntity %}
+                                {% set productEntity = product.getEntity %}
+
+                                <div class="buyblo-box-group-product buyblo-boxes-product{% if product.isManual %} buyblo-box-product-manual{% endif %}"
+                                     data-product-id='{{ product.getId }}'
+                                     data-category-id='{{ group.getCategory.getId }}'
+                                     data-category-title='{{ group.getCategory.getTitle }}'>
+
+                                    <div class="buyblo-box-top-label{% if product.isManual %} buyblo-box-top-label-promo">polecane{% else %}">zobacz również{% endif %}</div>
+
+                                    {% set photoSize = '200x200' %}
+                                    <div class="buyblo-box-product-image">
+                                        <img src="{{ productEntity.getPhotoId|photoUrl(photoSize,product.getTitle) }}"
+                                             alt="{{ product.getTitle|raw }}">
+                                    </div>
+                                    <div class="buyblo-box-product-title">
+                                        <a href="https://buyblo.com/{{ post.getUser.getRegion }}/products/{{ productEntity.getUrl }}.html?post={{ post.getId }}&source=buyblobox" target="_blank">
+                                            {{ productEntity.getTitle|raw }}
+                                        </a>
+                                    </div>
+                                    <div class="buyblo-box-product-price">
+                                        {% if productEntity.getPrices.getMin %}
+                                            od <span>{{ productEntity.getPrices.getMin|priceSup|raw }} zł</span>
+                                        {% else %}
+                                            niedostępny
+                                        {% endif %}
+                                    </div>
+                                    <div class="buyblo-box-product-parameters">
+                                        <ul>
+
+                                            {% for property in productEntity.getProperties[0:3]|propertiesFilter %}
+                                                <li>
+                                                    {{ property.getName }}:
+
+                                                    {% if property.getValue %}
+                                                        {% if property.getValue is iterable %}
+                                                            <em>{{ property.getValue|join(', ') }}&nbsp;{{ property.getUnit|raw }}</em>
+                                                        {% else %}
+                                                            <em>{{ property.getValue }}&nbsp;{{ property.getUnit|raw }}</em>
+                                                        {% endif %}
+                                                    {% else %}
+                                                        <em>-</em>
+                                                    {% endif %}
+
+                                                </li>
+                                            {% endfor %}
+
+                                        </ul>
+                                    </div>
+
+                                    {% if edit_mode %}
+
+                                        <div class="buyblo-box-settings{% if product.isManual %} buyblo-prod-visible buyblo-prod-added{% else %} buyblo-prod-none{% endif %}">
+                                            <div class="buyblo-box-action-btn">
+                                                <span class="buyblo-added-product">
+                                                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 28"><path d="M20.062 11.469c0-0.266-0.094-0.531-0.281-0.719l-1.422-1.406c-0.187-0.187-0.438-0.297-0.703-0.297s-0.516 0.109-0.703 0.297l-6.375 6.359-3.531-3.531c-0.187-0.187-0.438-0.297-0.703-0.297s-0.516 0.109-0.703 0.297l-1.422 1.406c-0.187 0.187-0.281 0.453-0.281 0.719s0.094 0.516 0.281 0.703l5.656 5.656c0.187 0.187 0.453 0.297 0.703 0.297 0.266 0 0.531-0.109 0.719-0.297l8.484-8.484c0.187-0.187 0.281-0.438 0.281-0.703zM24 14c0 6.625-5.375 12-12 12s-12-5.375-12-12 5.375-12 12-12 12 5.375 12 12z"></path></svg>
+                                                    Produkt dodany
+                                                </span>
+                                                <span class="buyblo-add-product" data-action="add">
+                                                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 28"><path d="M19 15v-2c0-0.547-0.453-1-1-1h-4v-4c0-0.547-0.453-1-1-1h-2c-0.547 0-1 0.453-1 1v4h-4c-0.547 0-1 0.453-1 1v2c0 0.547 0.453 1 1 1h4v4c0 0.547 0.453 1 1 1h2c0.547 0 1-0.453 1-1v-4h4c0.547 0 1-0.453 1-1zM24 14c0 6.625-5.375 12-12 12s-12-5.375-12-12 5.375-12 12-12 12 5.375 12 12z"></path></svg>
+                                                    Dodaj produkt
+                                                </span>
+                                                <span class="buyblo-remove-product" data-action="remove">
+                                                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 28"><path d="M19 15v-2c0-0.547-0.453-1-1-1h-12c-0.547 0-1 0.453-1 1v2c0 0.547 0.453 1 1 1h12c0.547 0 1-0.453 1-1zM24 14c0 6.625-5.375 12-12 12s-12-5.375-12-12 5.375-12 12-12 12 5.375 12 12z"></path></svg>
+                                                     Usuń produkt
+                                                </span>
+                                                <span class="buyblo-too-much-products">
+                                                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 28"><path  d="M19 15v-2c0-0.547-0.453-1-1-1h-12c-0.547 0-1 0.453-1 1v2c0 0.547 0.453 1 1 1h12c0.547 0 1-0.453 1-1zM24 14c0 6.625-5.375 12-12 12s-12-5.375-12-12 5.375-12 12-12 12 5.375 12 12z"></path></svg>
+                                                     Wybrano już maksymalną ilość produktów
+                                                </span>
+                                                <span class="buyblo-too-many-categories">
+                                                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 28"><path  d="M19 15v-2c0-0.547-0.453-1-1-1h-12c-0.547 0-1 0.453-1 1v2c0 0.547 0.453 1 1 1h12c0.547 0 1-0.453 1-1zM24 14c0 6.625-5.375 12-12 12s-12-5.375-12-12 5.375-12 12-12 12 5.375 12 12z"></path></svg>
+                                                     Wybrano już maksymalną ilość kategorii
+                                                </span>
+                                            </div>
+                                        </div>
+
+
+                                    {% endif %}
+
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="buyblo-navigation-slider">
+                        <button class="buyblo-navigation-left"> <</button>
+                        <button class="buyblo-navigation-right"> ></button>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

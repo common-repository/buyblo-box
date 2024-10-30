@@ -1,0 +1,8 @@
+<div class="Wrapper">
+    {% include 'admin/post/metabox/products-search/filters.twig' %}
+    {% if searchResult.getProducts|length %}
+        {% include 'admin/post/metabox/products-search/products.twig' %}
+    {% else %}
+        {% include 'admin/post/metabox/products-search/no-results.twig' %}
+    {% endif %}
+</div>

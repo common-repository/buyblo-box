@@ -1,0 +1,43 @@
+<input type="hidden" name="{{ metaPrefix }}{{ metaGroupsKey }}" value="{{ groupsJson }}" id="buyblo-box-groups-json"
+       autocomplete="off">
+
+<div>
+    <div class="buyblo-post-status">Status:
+        {% if post.getUrl and post.getVisibility %}
+            <div class="buyblo-post-status-visible"><span></span> widoczny</div>
+            <div class="buyblo-post-link"><a href="https://buyblo.com/{{ post.getUrl }}.html" target="_blank">zobacz swój wpis na buyblo.com</a></div>
+        {% else %}
+            <div class="buyblo-post-status-hidden"><span></span> niewidoczny</div>
+        {% endif %}
+    </div>
+    <span class="buyblo-site-icon"></span>
+
+    <div id="buyblo-box-search-box" class="buyblo-wordpress">
+        <div id="buyblo-box-products-search-content">
+            {{ productsSearchHtml|raw }}
+        </div>
+        <div class="buyblo-loader">
+            <span class="icon"></span>
+        </div>
+    </div>
+</div>
+
+<div id="buyblo-groups-container" style="position: relative;">
+    <div class="buyblo-loader">
+        <span class="icon"></span>
+    </div>
+    <h3>Powiązane produkty</h3>
+    <div id="buyblo-box-groups" class="buyblo-admin-panel">
+        {% if groupsHtml %}
+            {{ groupsHtml|raw }}
+        {% else %}
+            {% include 'admin/post/metabox/groups-not-found.twig' %}
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    jQuery(document).ready(function () {
+        BuyBloMetaBox.init();
+    });
+</script>

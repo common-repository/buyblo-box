@@ -1,0 +1,113 @@
+<div class="body" id="ProductsContainer">
+    <section id="ProductList">
+        <span class="icon-section"></span>
+
+        <header class="buyblo_sort_container buyblo_container">
+            <div class="buyblo_row_col">
+                <div class="buyblu_col_flt12">
+
+                    <div class="buyblo-dropdown">
+                        {% set selected = '' %}
+                        {% for sort in searchResult.getSorts %}
+                            {% if loop.first %}
+                                {% set selected = sort.name %}
+                            {% endif %}
+                            {% if  sort.isFilter %}
+                                {% set selected = sort.name %}
+                            {% endif %}
+                        {% endfor %}
+
+                        <button class="btn-buyblo-dropdown" type="button" id="dropdownSort"
+                                data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="true">
+                            {{ selected }}
+                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="12" height="10" viewBox="0 0 16 28"><path d="M16 11c0 0.266-0.109 0.516-0.297 0.703l-7 7c-0.187 0.187-0.438 0.297-0.703 0.297s-0.516-0.109-0.703-0.297l-7-7c-0.187-0.187-0.297-0.438-0.297-0.703 0-0.547 0.453-1 1-1h14c0.547 0 1 0.453 1 1z"></path></svg>
+                        </button>
+                        <ul class="buyblo-dropdown-menu buyblo-hidden" aria-labelledby="dropdownSort" id="ProductsSort">
+                            {% for sort in searchResult.getSorts if sort.name != selected %}
+                                <li data-value="{{ sort.url|productsSearchUrl }}">{{ sort.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </header>
+
+        <div class="buyblo_container">
+            <div class="buyblo_row_col">
+                <div class="buyblu_col_flt12 slides-pagination">
+                    Strona <span id="activePagePagin"></span> z <span id="maxPagePagin"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="buyblo_container">
+            <div class="buyblo-product-widget" data-widget-visible-nr="1">
+                <div class="owl-products-list buyblo-box-product-list">
+                    {% for product in searchResult.getProducts %}
+                        {% set singleOffer = product.offerCount == 1 and product.clickUrl is not empty %}
+                        {% set checked = (product.getId in groupsProductsIds) %}
+
+                        <div class="item buyblo-search-product{% if product.offerCount > 1 %} multiOffers{% endif %} D{{ product.properties | length }}"
+                             data-product-id="{{ product.id }}"
+                             data-category-id='{{ product.getCategoryId }}'
+                             id="product-box-{{ product.id }}"
+                        >
+                            <div class="buyblo-box-group-product">
+
+                                <div class="buyblo-box-product-image">
+                                    <img src="{{ product.photoId|photoUrl('250x250',product.getTitle) }}"
+                                         alt="{{ product.title|raw }}" width="220"
+                                         height="220"{% if product.photoId %} itemprop="image"{% endif %}/>
+                                </div>
+                                <div class="buyblo-box-product-title">{{ product.title|raw }}</div>
+                                <div class="buyblo-box-product-price">
+                                    {% if product.offerCount > 1 %}
+                                        od
+                                    {% endif %}
+                                    <span>{{ product.prices.min|price|raw }} zł</span>
+                                </div>
+                                <div class="buyblo-box-product-category">{{ product.getCategory.getTitle }}</div>
+
+                                <div class="buyblo-box-settings{% if checked %} buyblo-prod-visible buyblo-prod-added{% else %} buyblo-prod-none{% endif %}">
+                                    <div class="buyblo-box-action-btn">
+                                    <span class="buyblo-added-product">
+                                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 28"><path d="M20.062 11.469c0-0.266-0.094-0.531-0.281-0.719l-1.422-1.406c-0.187-0.187-0.438-0.297-0.703-0.297s-0.516 0.109-0.703 0.297l-6.375 6.359-3.531-3.531c-0.187-0.187-0.438-0.297-0.703-0.297s-0.516 0.109-0.703 0.297l-1.422 1.406c-0.187 0.187-0.281 0.453-0.281 0.719s0.094 0.516 0.281 0.703l5.656 5.656c0.187 0.187 0.453 0.297 0.703 0.297 0.266 0 0.531-0.109 0.719-0.297l8.484-8.484c0.187-0.187 0.281-0.438 0.281-0.703zM24 14c0 6.625-5.375 12-12 12s-12-5.375-12-12 5.375-12 12-12 12 5.375 12 12z"></path></svg>
+                                        Produkt dodany
+                                    </span>
+                                        <span class="buyblo-add-product" data-action="add">
+                                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 28"><path d="M19 15v-2c0-0.547-0.453-1-1-1h-4v-4c0-0.547-0.453-1-1-1h-2c-0.547 0-1 0.453-1 1v4h-4c-0.547 0-1 0.453-1 1v2c0 0.547 0.453 1 1 1h4v4c0 0.547 0.453 1 1 1h2c0.547 0 1-0.453 1-1v-4h4c0.547 0 1-0.453 1-1zM24 14c0 6.625-5.375 12-12 12s-12-5.375-12-12 5.375-12 12-12 12 5.375 12 12z"></path></svg>
+                                        Dodaj produkt
+                                    </span>
+                                        <span class="buyblo-remove-product" data-action="remove">
+                                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 28"><path d="M19 15v-2c0-0.547-0.453-1-1-1h-12c-0.547 0-1 0.453-1 1v2c0 0.547 0.453 1 1 1h12c0.547 0 1-0.453 1-1zM24 14c0 6.625-5.375 12-12 12s-12-5.375-12-12 5.375-12 12-12 12 5.375 12 12z"></path></svg>
+                                         Usuń produkt
+                                    </span>
+                                        <span class="buyblo-too-much-products">
+                                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 28"><path  d="M19 15v-2c0-0.547-0.453-1-1-1h-12c-0.547 0-1 0.453-1 1v2c0 0.547 0.453 1 1 1h12c0.547 0 1-0.453 1-1zM24 14c0 6.625-5.375 12-12 12s-12-5.375-12-12 5.375-12 12-12 12 5.375 12 12z"></path></svg>
+                                         Wybrano już maksymalną ilość produktów
+                                    </span>
+                                        <span class="buyblo-too-many-categories">
+                                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 28"><path  d="M19 15v-2c0-0.547-0.453-1-1-1h-12c-0.547 0-1 0.453-1 1v2c0 0.547 0.453 1 1 1h12c0.547 0 1-0.453 1-1zM24 14c0 6.625-5.375 12-12 12s-12-5.375-12-12 5.375-12 12-12 12 5.375 12 12z"></path></svg>
+                                         Wybrano już maksymalną ilość kategorii
+                                    </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="buyblo_container buyblo-navigation">
+                <div class="button buyblo-navigation-prev">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 501.5 501.5"><g><path d="M302.67 90.877l55.77 55.508L254.575 250.75 358.44 355.116l-55.77 55.506L143.56 250.75z"/></g></svg>
+                </div>
+                <div class="button buyblo-navigation-next">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 501.5 501.5"><g><path d="M199.33 410.622l-55.77-55.508L247.425 250.75 143.56 146.384l55.77-55.507L358.44 250.75z"/></g></svg>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

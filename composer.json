@@ -1,0 +1,37 @@
+{
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@gitlab:frontend/api-kit-php53.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@gitlab:buyblo/buyblo-api-kit.git"
+        }
+    ],
+    "require": {
+        "twig/twig": "1.*",
+        "nokaut/api-kit": "dev-buyblo",
+        "nokaut/buyblo-api-kit": "dev-buyblo-api-kit-php-53"
+    },
+    "scripts": {
+        "post-update-cmd": [
+            "echo [WARNING] Delete all vendor .git, docs, tests dirs",
+            "rm -rf vendor/**/**/.git",
+            "rm -rf vendor/**/**/test",
+            "rm -rf vendor/**/**/tests",
+            "rm -rf vendor/**/**/doc",
+            "rm -rf vendor/**/**/docs"
+        ],
+        "post-install-cmd": [
+            "echo [WARNING] Delete all vendor .git, docs, tests dirs",
+            "rm -rf vendor/**/**/.git",
+            "rm -rf vendor/**/**/test",
+            "rm -rf vendor/**/**/tests",
+            "rm -rf vendor/**/**/doc",
+            "rm -rf vendor/**/**/docs"
+        ]
+    }
+}
